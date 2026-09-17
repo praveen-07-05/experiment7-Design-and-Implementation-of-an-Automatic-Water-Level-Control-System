@@ -114,7 +114,59 @@ The water-level information is displayed on the **Wokwi Serial Monitor** using U
 
 ## Program
 
+#include "main.h"
 
+/* Water level sensor pins */
+#define LEVEL_1_PIN    GPIO_PIN_0
+#define LEVEL_2_PIN    GPIO_PIN_1
+#define LEVEL_3_PIN    GPIO_PIN_2
+#define LEVEL_4_PIN    GPIO_PIN_3
+
+/* LED pins */
+#define LED_1_PIN      GPIO_PIN_0
+#define LED_2_PIN      GPIO_PIN_1
+#define LED_3_PIN      GPIO_PIN_2
+#define LED_4_PIN      GPIO_PIN_3
+
+void SystemClock_Config(void);
+static void MX_GPIO_Init(void);
+
+int main(void)
+{
+    HAL_Init();
+
+    SystemClock_Config();
+    MX_GPIO_Init();
+
+    while (1)
+    {
+        /* Level 1 */
+        if (HAL_GPIO_ReadPin(GPIOA, LEVEL_1_PIN) == GPIO_PIN_SET)
+            HAL_GPIO_WritePin(GPIOB, LED_1_PIN, GPIO_PIN_SET);
+        else
+            HAL_GPIO_WritePin(GPIOB, LED_1_PIN, GPIO_PIN_RESET);
+
+        /* Level 2 */
+        if (HAL_GPIO_ReadPin(GPIOA, LEVEL_2_PIN) == GPIO_PIN_SET)
+            HAL_GPIO_WritePin(GPIOB, LED_2_PIN, GPIO_PIN_SET);
+        else
+            HAL_GPIO_WritePin(GPIOB, LED_2_PIN, GPIO_PIN_RESET);
+
+        /* Level 3 */
+        if (HAL_GPIO_ReadPin(GPIOA, LEVEL_3_PIN) == GPIO_PIN_SET)
+            HAL_GPIO_WritePin(GPIOB, LED_3_PIN, GPIO_PIN_SET);
+        else
+            HAL_GPIO_WritePin(GPIOB, LED_3_PIN, GPIO_PIN_RESET);
+
+        /* Level 4 - Full */
+        if (HAL_GPIO_ReadPin(GPIOA, LEVEL_4_PIN) == GPIO_PIN_SET)
+            HAL_GPIO_WritePin(GPIOB, LED_4_PIN, GPIO_PIN_SET);
+        else
+            HAL_GPIO_WritePin(GPIOB, LED_4_PIN, GPIO_PIN_RESET);
+
+        HAL_Delay(100);
+    }
+}
 ## Circuit Connections
 
 ### Potentiometer
